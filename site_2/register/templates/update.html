@@ -1,0 +1,22 @@
+{%extends 'base.html'%}
+{% block body%}
+<head>
+    <style>
+    form {
+
+        margin-top: 100px;
+        margin-bottom: 100px;
+        margin-right: 150px;
+        margin-left: 80px;
+    }
+</style>
+</head>
+<body>
+<form method="post" enctype="multipart/form-data">
+ {% csrf_token%}
+{{user_form.as_p}}
+{{profile_form.as_p}}
+<button type="submit">Update</button>
+</form>
+
+{%endblock%}

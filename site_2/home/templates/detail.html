@@ -1,0 +1,48 @@
+{%extends 'base.html'%}
+
+{%block body%}
+<title>instagram sample</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
+</style>
+<body class="w3-theme-l5">
+<div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+  <a href="{%url 'register:profile' post.user.profile.id%}"> <img src="{{post.user.profile.img.url}}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px"></a>
+  <span class="w3-right w3-opacity">{{post.time}}</span>  
+ <a href="{%url 'register:profile' post.user.profile.id%}">  <h4>{{post.user.first_name}} {{post.user.last_name}}</h4><br></a>
+  <hr class="w3-clear">
+  
+    <div class="w3-row-padding" style="margin:0 -16px">
+      <div class="w3-half">
+        <img src="{{post.img.url}}" style="width:100%" alt="Northern Lights" class="w3-margin-bottom">
+        <p>{{post.text}}</p>
+        </div>
+      </div>
+{%if is_like%}
+<a  href="{%url 'home:like' post.id%}"  class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-thumbs-down"></i></a>
+{%else%}
+  <a  href="{%url 'home:like' post.id%}"  class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-thumbs-up"></i></a>
+  {%endif%}
+    <a class="w3-button w3-theme-d2 w3-margin-bottom" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+      {{post.like_counter}} like
+    </a>
+    <button type="submit" class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  Comment</button> 
+  <div class="collapse" id="collapseExample">
+    {%for i in show_like%}
+    <div class="card card-body">
+      <p>
+              {{i}} 
+    </p> 
+     </div>
+     {%endfor%}
+  </div>
+</div>
+
+</body>
+{%endblock%}

@@ -1,0 +1,26 @@
+{% extends 'base.html'%}
+<style>
+
+    form {
+
+    margin-top: 100px;
+    margin-bottom: 100px;
+    margin-right: 150px;
+    margin-left: 80px;
+}
+</style>
+<body>
+{%block body%}
+<form method="POST" novalidate>
+    {%csrf_token%}
+    <div class="mb-3">
+        <label class="form-label">Image:</label>
+        <input type="file" id="imagefile" accept="image/*" name="img">
+      </div>
+     <div class="mb-3">
+    <input type="text" class="form-control" name="text">
+     </div>
+     <button type="submit" class="btn btn-primary">post</button>
+</form>
+</body>
+{%endblock%}

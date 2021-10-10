@@ -1,0 +1,9 @@
+{%extends 'base.html'%}
+{%block body%}
+{%include 'messages.html'%}
+<form action="" method="POST">
+    {% csrf_token%}
+    {{form.as_p}}
+    <button type="submit">change</button>
+</form>
+{%endblock%}
