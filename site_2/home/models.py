@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.base import Model
 from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE
+from .models import *
 
 # Create your models here.
 class Post(models.Model):
@@ -15,3 +16,11 @@ class Post(models.Model):
     
     def like_counter(self):
         return self.like.count()
+
+class Comment(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    poost = models.ForeignKey(Post,on_delete=models.CASCADE)
+    comment = models.TextField()
+    create = models.DateTimeField(auto_now_add=True)
+
+    

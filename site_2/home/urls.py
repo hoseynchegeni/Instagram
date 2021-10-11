@@ -9,5 +9,6 @@ urlpatterns =[
     path('test/',views.profile_link_homepage),
     path('create_post/',views.post,name='post'),
     path('like_post/<int:id>/',views.like_post,name='like'),
-    path('detail/<int:id>',views.detail,name='detail')
+    path('detail/<int:id>',views.detail,name='detail'),
+    path('comment/<int:id>/',views.post_comment,name='comment'),
 ]

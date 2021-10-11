@@ -29,11 +29,28 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 {%else%}
   <a  href="{%url 'home:like' post.id%}"  class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-thumbs-up"></i></a>
   {%endif%}
-    <a class="w3-button w3-theme-d2 w3-margin-bottom" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    <a class="w3-button w3-theme-d2 w3-margin-bottom" data-bs-toggle="collapse" href="#collapseLike" role="button" aria-expanded="false" aria-controls="collapseExample">
       {{post.like_counter}} like
     </a>
-    <button type="submit" class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  Comment</button> 
-  <div class="collapse" id="collapseExample">
+    <a class="w3-button w3-theme-d2 w3-margin-bottom" data-bs-toggle="collapse" href="#collapseComment" role="button" aria-expanded="false" aria-controls="collapseExample">
+      Comment
+    </a>
+    <div class="collapse" id="collapseComment">
+      <div class="card card-body">
+        <form method="POST" action="{%url 'home:comment' post.id%}">
+          {%csrf_token%}
+          <div class="comment-box">
+            <textarea name="comment" class="form-control" rows="4"></textarea>
+          </div>
+          <button type="submit" class="w3-button w3-theme-d2 w3-margin-bottom">submit comment</button>
+        </form>
+        {%for i in comment%}
+        <div class="col-8">
+          <p>{{i.user.username}}: {{i.comment}} </p>
+       </div>
+       {%endfor%}
+    </div>
+  <div class="collapse" id="collapseLike">
     {%for i in show_like%}
     <div class="card card-body">
       <p>
@@ -46,3 +63,11 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 
 </body>
 {%endblock%}
+
+
+
+
+<div class="comment-box">
+  <textarea name="comment" class="form-control" rows="4"></textarea>
+</div>
+<button type="submit" class="btn btn-danger">ثبت کامنت</button>
