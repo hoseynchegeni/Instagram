@@ -17,10 +17,14 @@ class Post(models.Model):
     def like_counter(self):
         return self.like.count()
 
+
 class Comment(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     poost = models.ForeignKey(Post,on_delete=models.CASCADE)
     comment = models.TextField()
     create = models.DateTimeField(auto_now_add=True)
+    replay =models.ForeignKey('self',on_delete=models.CASCADE, blank=True,null=True,related_name='comment_replay')
+    is_replay = models.BooleanField(default=False)
+
 
     

@@ -17,6 +17,18 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
            <h4 class="w3-center">{{pro.user.first_name}} {{pro.user.last_name}}</h4>
            <p class="w3-center"><img src="{{pro.img.url}}" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
            <hr>
+           <a  data-bs-toggle="collapse" href="#collapsefollow" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <p><i class="fa fa-user fa-fw w3-margin-right w3-text-theme"></i>followers: {{pro.follow_counter}}</p>
+          </a>
+          <div class="collapse" id="collapsefollow">
+            {%for i in pro.follow.all%}
+            <div class="card card-body">
+              <p>
+                <img src="{{i.profile.img.url}}" class="w3-circle" style="height:50px;width:50px" alt="Avatar"> <a href="{%url 'register:profile' i.profile.id%}">{{i.username}} </a>
+            </p> 
+             </div>
+             {%endfor%}
+          </div>
            <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> {{pro.bio}}</p>
            <p><i class="fa fa-phone fa-fw w3-margin-right w3-text-theme"></i> {{pro.phone}}</p>
            <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> {{pro.addres}}</p>
@@ -24,4 +36,9 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
           </div>
         </div>
         <br>
+{%if is_follow%}
+<a  href="{%url 'register:follow' pro.id%}"  class="w3-button w3-theme-d2 w3-margin-bottom">Unfollow</a>
+{%else%}
+  <a  href="{%url 'register:follow' pro.id%}"  class="w3-button w3-theme-d2 w3-margin-bottom">Follow</a>
+{%endif%}
 {%endblock%}

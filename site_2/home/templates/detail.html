@@ -3,7 +3,7 @@
 {%block body%}
 <title>instagram sample</title>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
@@ -32,6 +32,15 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
     <a class="w3-button w3-theme-d2 w3-margin-bottom" data-bs-toggle="collapse" href="#collapseLike" role="button" aria-expanded="false" aria-controls="collapseExample">
       {{post.like_counter}} like
     </a>
+    <div class="collapse" id="collapseLike">
+      {%for i in post.like.all%}
+      <div class="card card-body">
+        <p>
+          <img src="{{i.profile.img.url}}" class="w3-circle" style="height:50px;width:50px" alt="Avatar"> <a href="{%url 'register:profile' i.profile.id%}">{{i.username}} </a>
+      </p> 
+       </div>
+       {%endfor%}
+    </div>
     <a class="w3-button w3-theme-d2 w3-margin-bottom" data-bs-toggle="collapse" href="#collapseComment" role="button" aria-expanded="false" aria-controls="collapseExample">
       Comment
     </a>
@@ -46,19 +55,19 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
         </form>
         {%for i in comment%}
         <div class="col-8">
-          <p>{{i.user.username}}: {{i.comment}} </p>
+          <p>  <img src="{{i.user.profile.img.url}}" class="w3-circle" style="height:40px;width:40px" alt="Avatar"> <a href="{%url 'register:profile' i.user.profile.id%}">{{i.user.username}} </a>: {{i.comment}} 
+            <a  data-bs-toggle="collapse" href="#collapsereplay" role="button" aria-expanded="false" aria-controls="collapseExample">
+              Replay
+            </a> </p> 
+            <div class="collapse" id="collapsereplay">
+              <div class="card card-body">
+              Coming soon
+              </div>
+              </div>
        </div>
        {%endfor%}
     </div>
-  <div class="collapse" id="collapseLike">
-    {%for i in show_like%}
-    <div class="card card-body">
-      <p>
-              {{i}} 
-    </p> 
-     </div>
-     {%endfor%}
-  </div>
+  
 </div>
 
 </body>

@@ -51,7 +51,7 @@ def detail(requset,id):
     post = get_object_or_404(Post,id=id)
     show_like = post.like.all()
     comment_from = commentform()
-    comment = Comment.objects.filter(poost_id=id)
+    comment = Comment.objects.filter(poost_id=id,is_replay = False)
     is_like = False
     if post.like.filter(id=requset.user.id).exists():
         is_like=True
@@ -63,3 +63,15 @@ def post_comment(request,id):
             data = comment_form.cleaned_data
             Comment.objects.create(comment=data['comment'],user_id=request.user.id,poost_id=id) 
         return redirect('home:detail',post.id)
+
+def replay(request,id,comment_id):
+    if request.method == 'POST':
+        post = get_object_or_404(Post,id=id)
+        raplay_form = replayform(request.POST)
+        if raplay_form.is_valid():
+            data = raplay_form.cleaned_data
+            Comment.objects.create(comment=data['comment'],post_id=id,user_id=request.user.id,replay_id=comment_id,is_replay=True)
+            pm.success(request,'you replay this message')
+            return redirect ('home:detail',post.id)
+        else:
+           return redirect('home:detail',post.id)

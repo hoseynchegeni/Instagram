@@ -1,4 +1,4 @@
-from register.models import profile
+
 from django.urls import path
 from . import views
 
@@ -10,7 +10,8 @@ urlpatterns =[
      path('profile/<int:id>/',views.userprofile,name='profile'),
      path('update/',views.ProfileUpdate,name='update'),
      path('change/',views.changepassword,name='change'),
-     path('logout/',views.logoutuser,name='logout')
+     path('logout/',views.logoutuser,name='logout'),
+     path('follow/<int:id>/',views.follow_user,name='follow')
 
 ]
 

@@ -10,3 +10,6 @@ class commentform(ModelForm):
     class Meta:
         model = Comment
         fields=['comment'] 
+class replayform(ModelForm):
+    model = Comment
+    fields = ['comment']

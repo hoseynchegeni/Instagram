@@ -9,6 +9,10 @@ class profile(models.Model):
     bio = models.CharField(max_length=100,null=True,blank=True)
     birth = models.DateField(null=True,blank=True)
     img=models.ImageField(upload_to='profile_img',null=True,blank=True)
+    follow = models.ManyToManyField(User,blank=True,null=True,related_name='follow')
+    follow_counter = models.PositiveBigIntegerField(default=0)
+    def follow_counter(self):
+        return self.follow.count()
 def saveorifuleuser(sender ,**kwargs):
     if kwargs.get('created'):
         profileuser=profile(user=kwargs.get('instance'))

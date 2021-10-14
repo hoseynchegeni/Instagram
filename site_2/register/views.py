@@ -6,6 +6,7 @@ from .models import profile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib import messages 
 # Create your views here.
 
 def  index (request):
@@ -54,8 +55,11 @@ def login (request):
 @login_required(login_url='register:login')
 def userprofile(request,id):
     pro = get_object_or_404(profile,id=id)
-
-    return render(request,'profile.html',{'pro':pro})
+    show_followers = profile.follow
+    is_follow = False
+    if pro.follow.filter(id = request.user.id).exists():
+        is_follow=True
+    return render(request,'profile.html',{'pro':pro,'is_follow':is_follow,'show_followers':show_followers})
 @login_required(login_url='register:login')
 def ProfileUpdate(request):
     if request.method =='POST':
@@ -92,3 +96,16 @@ def logoutuser(request):
     messages.success(request,'loged out')
     return redirect('home:home')
 
+def follow_user(request,id):
+    follower = get_object_or_404(profile,id=id)
+    is_follow = False
+    if follower.follow.filter(id=request.user.id).exists():
+        follower.follow.remove(request.user)
+        is_follow = False
+        messages.success(request,'you unfollow this user')
+    else: 
+        follower.follow.add(request.user)
+        is_follow = True
+        messages.success(request,'you follow this user')
+
+    return redirect ('register:profile',follower.id)
