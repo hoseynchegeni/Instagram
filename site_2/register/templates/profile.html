@@ -16,7 +16,16 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
           <div class="w3-container">
            <h4 class="w3-center">{{pro.user.first_name}} {{pro.user.last_name}}</h4>
            <p class="w3-center"><img src="{{pro.img.url}}" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
-           <hr>
+           <p>
+            {%if is_follow%}
+            <a  href="{%url 'register:follow' pro.id%}"  class="w3-button w3-theme-d2 w3-margin-bottom" style="margin-inline: 3px;">Unfollow</a>
+            {%else%}
+            <a  href="{%url 'register:follow' pro.id%}"  class="w3-button w3-theme-d2 w3-margin-bottom">Follow</a>
+            {%endif%}
+            <a  href="#"  class="w3-button w3-theme-d2 w3-margin-bottom" >Message</a>
+          </p>
+           
+            <hr>
            <a  data-bs-toggle="collapse" href="#collapsefollow" role="button" aria-expanded="false" aria-controls="collapseExample">
             <p><i class="fa fa-user fa-fw w3-margin-right w3-text-theme"></i>followers: {{pro.follow_counter}}</p>
           </a>
@@ -36,9 +45,18 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
           </div>
         </div>
         <br>
-{%if is_follow%}
-<a  href="{%url 'register:follow' pro.id%}"  class="w3-button w3-theme-d2 w3-margin-bottom">Unfollow</a>
-{%else%}
-  <a  href="{%url 'register:follow' pro.id%}"  class="w3-button w3-theme-d2 w3-margin-bottom">Follow</a>
-{%endif%}
+<div class="container">
+  <div class="row">
+{%for i in user_posts%}
+<div class="card" style="width: 18rem;">
+  <img src="{{i.img.url}}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title"></h5>
+    <p class="card-text">{{i.text}}</p>
+    <a href="{%url 'home:detail' i.id%}" class="w3-button w3-theme-d2 w3-margin-bottom" >Detail</a>
+  </div>
+</div>
+{%endfor%}
+</div>
+</div>
 {%endblock%}

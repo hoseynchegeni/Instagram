@@ -1,3 +1,4 @@
+from typing import Text
 from django.http import request
 from .models import Post
 from django.shortcuts import render,redirect,get_object_or_404
@@ -5,10 +6,11 @@ from register.models import profile
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages as pm
 from .forms import *
+from django.db.models import Q
 
 @login_required(login_url='register:login')
 def home(request):
-    post = Post.objects.all()
+    post = Post.objects.all().order_by('-time')
     pro = profile.objects.get(user_id = request.user.id)
     form = post_form()
     show = Post.like
@@ -51,7 +53,7 @@ def detail(requset,id):
     post = get_object_or_404(Post,id=id)
     show_like = post.like.all()
     comment_from = commentform()
-    comment = Comment.objects.filter(poost_id=id,is_replay = False)
+    comment = Comment.objects.filter(poost_id=id,)
     is_like = False
     if post.like.filter(id=requset.user.id).exists():
         is_like=True
@@ -64,14 +66,15 @@ def post_comment(request,id):
             Comment.objects.create(comment=data['comment'],user_id=request.user.id,poost_id=id) 
         return redirect('home:detail',post.id)
 
-def replay(request,id,comment_id):
+def search(request):
+    post = Post.objects.all()
     if request.method == 'POST':
-        post = get_object_or_404(Post,id=id)
-        raplay_form = replayform(request.POST)
-        if raplay_form.is_valid():
-            data = raplay_form.cleaned_data
-            Comment.objects.create(comment=data['comment'],post_id=id,user_id=request.user.id,replay_id=comment_id,is_replay=True)
-            pm.success(request,'you replay this message')
-            return redirect ('home:detail',post.id)
-        else:
-           return redirect('home:detail',post.id)
+        form = searchform(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data['search']
+            if data is not None:
+                post=Post.objects.filter(text__contains=data)
+            return render(request,'all_profile.html',{'post':post,'form':form})
+
+
+

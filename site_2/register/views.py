@@ -1,4 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
+
+from home.models import Post
 from .forms import *
 from django.contrib.auth import authenticate,login as aa,logout
 from django.contrib import messages
@@ -55,11 +57,12 @@ def login (request):
 @login_required(login_url='register:login')
 def userprofile(request,id):
     pro = get_object_or_404(profile,id=id)
+    user_posts = Post.objects.filter(user_id= pro.user.id)
     show_followers = profile.follow
     is_follow = False
     if pro.follow.filter(id = request.user.id).exists():
         is_follow=True
-    return render(request,'profile.html',{'pro':pro,'is_follow':is_follow,'show_followers':show_followers})
+    return render(request,'profile.html',{'pro':pro,'is_follow':is_follow,'show_followers':show_followers , 'user_posts':user_posts})
 @login_required(login_url='register:login')
 def ProfileUpdate(request):
     if request.method =='POST':

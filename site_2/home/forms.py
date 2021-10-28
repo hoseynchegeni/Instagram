@@ -10,6 +10,6 @@ class commentform(ModelForm):
     class Meta:
         model = Comment
         fields=['comment'] 
-class replayform(ModelForm):
-    model = Comment
-    fields = ['comment']
+
+class searchform(forms.Form):
+    search = forms.CharField(max_length=20)

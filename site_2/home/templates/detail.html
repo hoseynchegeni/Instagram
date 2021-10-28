@@ -56,14 +56,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
         {%for i in comment%}
         <div class="col-8">
           <p>  <img src="{{i.user.profile.img.url}}" class="w3-circle" style="height:40px;width:40px" alt="Avatar"> <a href="{%url 'register:profile' i.user.profile.id%}">{{i.user.username}} </a>: {{i.comment}} 
-            <a  data-bs-toggle="collapse" href="#collapsereplay" role="button" aria-expanded="false" aria-controls="collapseExample">
-              Replay
-            </a> </p> 
-            <div class="collapse" id="collapsereplay">
-              <div class="card card-body">
-              Coming soon
-              </div>
-              </div>
+
        </div>
        {%endfor%}
     </div>

@@ -10,30 +10,31 @@
 <style>
 html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 </style>
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">.</th>
-        <th scope="col">name</th>
-        <th scope="col">bio</th>
-        <th scope="col">locations</th>
-        <th scope="col">birth</th>
-      </tr>
-    </thead>
-    {%for i in pro%} 
-    <tbody>
-      <tr>
-        <div class="w3-card w3-round w3-white">
-          <div class="w3-container">
-        <td  class="w3-center"><img src="{{i.img.url}}" class="w3-circle" style="height:70px;width:70px" alt="Avatar"></td>
+<body>
+  <form method="POST" action="{%url 'home:search'%}">
+    {%csrf_token%}
+    <input type="text" class="form-control" name="search" >
+    <button type="submit">search</button>
+  </form>
+  {%for i in post%}
+  <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+    <a href="{%url 'register:profile' i.user.profile.id%}"> <img src="{{i.user.profile.img.url}}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px"></a>
+    <span class="w3-right w3-opacity">{{i.time}}</span>  
+   <a href="{%url 'register:profile' i.user.profile.id%}">  <h4>{{i.user.first_name}} {{i.user.last_name}}</h4><br></a>
+    <hr class="w3-clear">
+    
+      <div class="w3-row-padding" style="margin:0 -16px">
+        <div class="w3-half">
+          <img src="{{i.img.url}}" style="width:100%" alt="Northern Lights" class="w3-margin-bottom">
+          <p>{{i.text}}</p>
+          </div>
         </div>
-        </div>
-        <td> <a href="{%url 'register:profile' i.id%}">{{i.user.first_name}} {{i.user.last_name}}</a></td>
-        <td>{{i.bio}}</td>
-        <td>{{i.addres}}</td>
-        <td>{{i.birth}}</td>
-      </tr>
-      {%endfor%}
-    </tbody>
-  </table>
-  {%endblock%}
+
+    <a href="{%url 'home:detail' i.id%}" class="w3-button w3-theme-d2 w3-margin-bottom">Detail</a>
+
+  </div>
+ 
+
+  {%endfor%}
+</body>
+{%endblock%}

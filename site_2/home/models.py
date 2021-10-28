@@ -23,8 +23,7 @@ class Comment(models.Model):
     poost = models.ForeignKey(Post,on_delete=models.CASCADE)
     comment = models.TextField()
     create = models.DateTimeField(auto_now_add=True)
-    replay =models.ForeignKey('self',on_delete=models.CASCADE, blank=True,null=True,related_name='comment_replay')
-    is_replay = models.BooleanField(default=False)
+
 
 
     
