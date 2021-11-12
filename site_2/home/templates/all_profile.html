@@ -1,5 +1,8 @@
 {% extends 'base.html'%}
-
+{% load static %}
+{%block css%}
+<link rel="stylesheet" href="{%static 'home/all.css'%}">
+{%endblock%}
 {%block body%}
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,32 +12,67 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
+.main {
+    width: 50%;
+    margin: 50px auto;
+}
+
+/* Bootstrap 4 text input with search icon */
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
 </style>
 <body>
-  <form method="POST" action="{%url 'home:search'%}">
-    {%csrf_token%}
-    <input type="text" class="form-control" name="search" >
-    <button type="submit">search</button>
+
+  <div class="main">
+  
+
+    <div class="input-group">
+      <form method="POST" action="{%url 'home:search'%}">
+        {%csrf_token%}
+      <input type="text" class="form-control" placeholder="Search this blog" name="search">
+      <div class="input-group-append">
+        <button class="btn btn-secondary" type="submit">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+    </div>
   </form>
-  {%for i in post%}
-  <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-    <a href="{%url 'register:profile' i.user.profile.id%}"> <img src="{{i.user.profile.img.url}}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px"></a>
-    <span class="w3-right w3-opacity">{{i.time}}</span>  
-   <a href="{%url 'register:profile' i.user.profile.id%}">  <h4>{{i.user.first_name}} {{i.user.last_name}}</h4><br></a>
-    <hr class="w3-clear">
-    
-      <div class="w3-row-padding" style="margin:0 -16px">
-        <div class="w3-half">
-          <img src="{{i.img.url}}" style="width:100%" alt="Northern Lights" class="w3-margin-bottom">
-          <p>{{i.text}}</p>
-          </div>
-        </div>
-
-    <a href="{%url 'home:detail' i.id%}" class="w3-button w3-theme-d2 w3-margin-bottom">Detail</a>
-
   </div>
- 
-
+  
+  
+  <div class="container">
+    <div class="row">
+      {%for i in post%}
+  <div class="card" style="width: 18rem;">
+    <img src="{{i.img.url}}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title"></h5>
+      <p class="card-text">{{i.text}}</p>
+      <a href="{%url 'home:detail' i.id%}" class="w3-button w3-theme-d2 w3-margin-bottom" >Detail</a>
+    </div>
+  </div>
   {%endfor%}
+  </div>
+  </div>
+
+  
 </body>
 {%endblock%}
+
+
+
