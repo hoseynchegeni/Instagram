@@ -18,3 +18,13 @@ class post_delete_api_view(generics.DestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = postdeleteserializer
     lookup_field = 'id'
+
+class post_update_api_view(generics.UpdateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = postupdateserializer
+    lookup_field = 'id'
+
+class post_create_api_view(generics.CreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = postupdateserializer
+    

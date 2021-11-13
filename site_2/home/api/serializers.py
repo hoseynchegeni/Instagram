@@ -17,3 +17,13 @@ class postdeleteserializer(ModelSerializer):
     class Meta:
         model = Post
         fields = '__all__'
+
+class postupdateserializer(ModelSerializer):
+    class Meta:
+        model = Post
+        fields = '__all__'
+
+class postcreateserializer(ModelSerializer):
+    class Meta:
+        model = Post
+        fields = '__all__'
